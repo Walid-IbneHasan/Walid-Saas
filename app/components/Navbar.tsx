@@ -8,16 +8,19 @@ import {
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Link from "next/link";
 import UserNav from "./UserNav";
+import { get } from "http";
 
 export default async function Navbar() {
-  const { isAuthenticated } = getKindeServerSession();
+  const { isAuthenticated, getUser } = getKindeServerSession();
+  const user = await getUser();
+  console.log(user);
 
   return (
     <nav className="border-b bg-background flex h-[10vh]  items-center ">
       <div className="container flex items-center justify-between ">
         <Link href="/">
           <h1 className="font-bold text-3xl">
-            Walid <span className="primary">Saas</span>{" "}
+            Walid <span className="text-primary">Saas</span>{" "}
           </h1>{" "}
         </Link>
 
@@ -25,9 +28,9 @@ export default async function Navbar() {
           <ModeToggle />
           {(await isAuthenticated()) ? (
             <UserNav
-              name="Walid"
-              email="walid@gmail.com"
-              image="https://github.com/shadcn.png"
+              name={user?.given_name}
+              email={user?.email}
+              image={user?.picture}
             />
           ) : (
             <div className="flex items-center space-x-5">

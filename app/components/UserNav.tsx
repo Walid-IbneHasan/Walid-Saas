@@ -25,17 +25,17 @@ export default function UserNav({
   email,
   image,
 }: {
-  name: string;
-  email: string;
-  image: string;
+  name: string | undefined | null;
+  email: string | undefined | null;
+  image: string | undefined | null;
 }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-10 w-10 rounded-full">
           <Avatar className="h-10 w-10 rounded-full">
-            <AvatarImage src={image} alt="" />
-            <AvatarFallback>Jan</AvatarFallback>
+            <AvatarImage src={image || ""} alt="" />
+            <AvatarFallback>{name![0]}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
